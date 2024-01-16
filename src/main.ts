@@ -1,33 +1,33 @@
-import { Client } from 'node-appwrite';
-
-// This is your Appwrite function
-// It's executed each time we get a request
 export default async ({ req, res, log, error }: any) => {
-  // Why not try the Appwrite SDK?
-  //
-  // const client = new Client()
-  //    .setEndpoint('https://cloud.appwrite.io/v1')
-  //    .setProject(Bun.env["APPWRITE_FUNCTION_PROJECT_ID"])
-  //    .setKey(Bun.env["APPWRITE_API_KEY"]);
-
-  // You can log messages to the console
-  log("Hello, Logs!");
-
-  // If something goes wrong, log an error
-  error("Hello, Errors!");
-
-  // The `req` object contains the request data
-  if (req.method === "GET") {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return res.send("Hello, World!");
+  if (!('GIPHY_API_KEY' in Bun.env)) {
+    res.json({
+        capybara: null,
+        message: 'No GiPHY API key found.',
+    });
   }
 
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: "Build like a team of hundreds_",
-    learn: "https://appwrite.io/docs",
-    connect: "https://appwrite.io/discord",
-    getInspired: "https://builtwith.appwrite.io",
-  });
+  if (req.method === 'GET') {
+    try {
+        const response = await fetch('https://api.giphy.com/v1/gifs/random?api_key=${Bun.env["GIPHY_API_KEY"]}&tag=capybara');
+        const data = await response.json();
+        const gifUrl = data.data.image_original_url;
+        res.setHeader('Content-Type', 'text/plain');
+        res.json({
+            capybara: gifUrl,
+            message: 'Capybara of the day!'
+        });
+    } catch (err) {
+        error(err);
+        res.json({
+            capybara: null,
+            message: 'Could not find any Cappybaras :(',
+        });
+    }
+  } else {
+    res.json({
+      capybara: null,
+      message: 'Method not allowed.',
+    });
+  }
+
 };
