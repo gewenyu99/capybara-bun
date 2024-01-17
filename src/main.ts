@@ -1,3 +1,6 @@
+import { buildTemplate } from "./form";
+import { getGif } from "./getGif";
+
 export default async ({ req, res, log, error }: any) => {
   if (!('GIPHY_API_KEY' in process.env)) {
     return res.json({
@@ -7,22 +10,13 @@ export default async ({ req, res, log, error }: any) => {
   }
 
   if (req.method === 'GET') {
-    try {
-        const response = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env["GIPHY_API_KEY"]}&tag=capybara`);
-        const data = await response.json();
-        log(JSON.stringify(data));
-        const gifUrl = data.data.embed_url;
-        return res.json({
-            capybara: gifUrl,
-            message: 'Capybara of the day!'
-        });
-    } catch (err) {
-        error(JSON.stringify(err));
-        return res.json({
-            capybara: null,
-            message: 'Could not find any Cappybaras :(',
-        });
-    }
+    let capyUrl = await getGif(process.env['GIPHY_API_KEY']);
+    const html = buildTemplate(capyUrl);
+
+    log(html)
+    return res.send(html, 200, {
+      'Content-Type': 'text/html; charset=utf-8',
+    });
   } else {
     return res.json({
       capybara: null,
