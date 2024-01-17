@@ -11,7 +11,7 @@ export default async ({ req, res, log, error }: any) => {
 
   if (req.method === 'GET') {
     let capyUrl = await getGif(process.env['GIPHY_API_KEY']);
-    const html = render(capyUrl);
+    const html = await render(capyUrl);
 
     log(html)
     return res.send(html, 200, {
