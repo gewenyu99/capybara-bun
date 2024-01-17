@@ -9,12 +9,17 @@ export default async ({ req, res, log, error }: any) => {
     });
   }
 
-  if (req.method === 'GET') {
-    let capyUrl = await getGif(process.env['GIPHY_API_KEY']);
+  try {
+    if (req.method === 'GET') {
+      let gifUrl = await getGif(process.env['GIPHY_API_KEY']);
 
-    return res.send(<DisplayGif gifUrl={gifUrl} >, 200, {
-      'Content-Type': 'text/html; charset=utf-8',
-    });
+      return res.send(<DisplayGif gifUrl={gifUrl} />, 200, {
+        'Content-Type': 'text/html; charset=utf-8',
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred');
   }
 
   return res.json({
