@@ -1,4 +1,4 @@
-import { buildTemplate } from "./form";
+import { render } from "./form";
 import { getGif } from "./getGif";
 
 export default async ({ req, res, log, error }: any) => {
@@ -11,7 +11,7 @@ export default async ({ req, res, log, error }: any) => {
 
   if (req.method === 'GET') {
     let capyUrl = await getGif(process.env['GIPHY_API_KEY']);
-    const html = buildTemplate(capyUrl);
+    const html = render(capyUrl);
 
     log(html)
     return res.send(html, 200, {
@@ -23,5 +23,4 @@ export default async ({ req, res, log, error }: any) => {
       message: 'Method not allowed.',
     });
   }
-
 };
