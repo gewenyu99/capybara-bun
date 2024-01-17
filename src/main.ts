@@ -10,15 +10,15 @@ export default async ({ req, res, log, error }: any) => {
     try {
         const response = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env["GIPHY_API_KEY"]}&tag=capybara`);
         const data = await response.json();
+        log(JSON.stringify(data));
         const gifUrl = data.data.embed_url;
-        res.setHeader('Content-Type', 'text/plain');
         return res.json({
             capybara: gifUrl,
             message: 'Capybara of the day!'
         });
     } catch (err) {
-        error(err);
-        return  res.json({
+        error(JSON.stringify(err));
+        return res.json({
             capybara: null,
             message: 'Could not find any Cappybaras :(',
         });
