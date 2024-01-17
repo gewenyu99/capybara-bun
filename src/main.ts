@@ -10,7 +10,7 @@ export default async ({ req, res, log, error }: any) => {
     try {
         const response = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env["GIPHY_API_KEY"]}&tag=capybara`);
         const data = await response.json();
-        const gifUrl = data.data.image_original_url;
+        const gifUrl = data.data.embed_url;
         res.setHeader('Content-Type', 'text/plain');
         return res.json({
             capybara: gifUrl,
