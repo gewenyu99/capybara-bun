@@ -1,7 +1,9 @@
 import { renderToReadableStream } from "react-dom/server";
 
 function DisplayGif({ gifUrl }) {
-    return <img src={gifUrl} alt="Random Gif" />;
+    return (
+        <img src={gifUrl} alt="Random Gif" />
+    );
 }
 
 export async function render(gifUrl){

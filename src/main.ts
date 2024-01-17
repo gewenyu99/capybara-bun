@@ -13,14 +13,13 @@ export default async ({ req, res, log, error }: any) => {
     let capyUrl = await getGif(process.env['GIPHY_API_KEY']);
     const html = await render(capyUrl);
 
-    log(html)
     return res.send(html, 200, {
       'Content-Type': 'text/html; charset=utf-8',
     });
-  } else {
-    return res.json({
-      capybara: null,
-      message: 'Method not allowed.',
-    });
   }
+
+  return res.json({
+    capybara: null,
+    message: 'Method not allowed.',
+  });
 };
