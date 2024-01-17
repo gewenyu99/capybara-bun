@@ -8,7 +8,7 @@ export default async ({ req, res, log, error }: any) => {
 
   if (req.method === 'GET') {
     try {
-        const response = await fetch('https://api.giphy.com/v1/gifs/random?api_key=${Bun.env["GIPHY_API_KEY"]}&tag=capybara');
+        const response = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${process.env["GIPHY_API_KEY"]}&tag=capybara`);
         const data = await response.json();
         const gifUrl = data.data.image_original_url;
         res.setHeader('Content-Type', 'text/plain');
