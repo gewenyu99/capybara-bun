@@ -1,5 +1,5 @@
 export default async ({ req, res, log, error }: any) => {
-  if (!('GIPHY_API_KEY' in Bun.env)) {
+  if (!('GIPHY_API_KEY' in process.env)) {
     return res.json({
         capybara: null,
         message: 'No GiPHY API key found.',
