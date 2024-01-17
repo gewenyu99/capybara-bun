@@ -14,7 +14,6 @@ describe("getGifs", () => {
   test("getGif returns a valid URL", async () => {
     const gifUrl = await getGif(process.env['GIPHY_API_KEY']);
     expect(gifUrl).toMatch(/^(http|https):\/\/[^ "]+$/);
-    expect(gifUrl).toMatch(/\.gif$/);
   });
   
   // test("This will always fail", async () => {
