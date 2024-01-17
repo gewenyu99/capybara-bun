@@ -1,6 +1,6 @@
 export default async ({ req, res, log, error }: any) => {
   if (!('GIPHY_API_KEY' in Bun.env)) {
-    res.json({
+    return res.json({
         capybara: null,
         message: 'No GiPHY API key found.',
     });
@@ -12,19 +12,19 @@ export default async ({ req, res, log, error }: any) => {
         const data = await response.json();
         const gifUrl = data.data.image_original_url;
         res.setHeader('Content-Type', 'text/plain');
-        res.json({
+        return res.json({
             capybara: gifUrl,
             message: 'Capybara of the day!'
         });
     } catch (err) {
         error(err);
-        res.json({
+        return  res.json({
             capybara: null,
             message: 'Could not find any Cappybaras :(',
         });
     }
   } else {
-    res.json({
+    return res.json({
       capybara: null,
       message: 'Method not allowed.',
     });
