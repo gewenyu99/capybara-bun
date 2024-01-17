@@ -17,8 +17,8 @@ describe("getGifs", () => {
     expect(gifUrl).toMatch(/\.gif$/);
   });
   
-  test("This will always fail", async () => {
-    expect(true).toBe(false);
-  });
+  // test("This will always fail", async () => {
+  //   expect(true).toBe(false);
+  // });
 });
 
