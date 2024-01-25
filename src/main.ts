@@ -1,5 +1,6 @@
 import { render } from "./form";
 import { getGif } from "./getGif";
+import { setTimeout } from "timers/promises";
 
 export default async ({ req, res, log, error }: any) => {
   if (!('GIPHY_API_KEY' in process.env)) {
@@ -9,6 +10,8 @@ export default async ({ req, res, log, error }: any) => {
     });
   }
 
+  await setTimeout(10000);
+  
   if (req.method === 'GET') {
     let capyUrl = await getGif(process.env['GIPHY_API_KEY']);
     const html = await render(capyUrl);
