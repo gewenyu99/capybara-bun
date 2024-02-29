@@ -1,5 +1,19 @@
 import { renderToReadableStream } from "react-dom/server";
 
+const styles = `
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+div {
+  max-width: 600px;
+  margin: 0 auto;
+}
+img {
+  width: 100%;
+  height: auto;
+}`;
+
 const GIPHY_API = "https://api.giphy.com/v1/gifs/random";
 
 export async function fetchGif(tag: string) {
@@ -29,10 +43,13 @@ export default async function handler({ req, res, log, error }: any) {
   const gifUrl = await fetchGif("capybara");
 
   const html = await renderToReadableStream(
-    <div>
-      <img src={gifUrl} alt="Random capybara" />
-      <h1>Capybara of the day!</h1>
-    </div>
+    <>
+      <style>{styles}</style>
+      <div>
+        <img src={gifUrl} alt="Random capybara" />
+        <h1>Capybara of the day!</h1>
+      </div>
+    </>
   );
 
   return res.send(html, 200, {
