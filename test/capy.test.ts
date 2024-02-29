@@ -1,23 +1,14 @@
-import { describe, expect, test, beforeAll } from "bun:test";
-import { getGif } from "../src/getGif";
+import { describe, expect, test } from "bun:test";
+import { fetchGif } from "../src/main.tsx";
 
-beforeAll(() => {
-  // setup tests
-});
-
-describe("getGifs", () => {
+describe("fetchGif", () => {
   test("API key exists", () => {
-    expect('GIPHY_API_KEY' in process.env).toBe(true);
-    expect(typeof process.env['GIPHY_API_KEY']).toBe('string');
+    expect("GIPHY_API_KEY" in process.env).toBe(true);
+    expect(typeof process.env["GIPHY_API_KEY"]).toBe("string");
   });
 
   test("getGif returns a valid URL", async () => {
-    const gifUrl = await getGif(process.env['GIPHY_API_KEY']);
+    const gifUrl = await fetchGif("capybara");
     expect(gifUrl).toMatch(/^(http|https):\/\/[^ "]+$/);
   });
-  
-  // test("This will always fail", async () => {
-  //   expect(true).toBe(false);
-  // });
 });
-
