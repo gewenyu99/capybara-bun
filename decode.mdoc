@@ -38,10 +38,6 @@ The Bun function returns a webpage using `renderToReadableStream` to parse JSX.
 The templates in the GIF's URL from `fetchGif` and a image preview. 
 {% /step %}
 
-{% step file="src/main.tsx" lines="27-58" %}
-The `export default async function handler({ req, res, log, error }: any)` method marks the entry point for Appwrite Function's handlers.
-{% /step %}
-
 {% step file="src/main.tsx" lines="55-57" %}
 The readable stream is then returned as a response object, which Appwrite Functions will rethrow as a response to the viewer.
 {% /step %}
