@@ -26,7 +26,7 @@ export async function fetchGif(tag: string) {
 
 export default async function handler({ req, res, log, error }: any) {
   if (!process.env.GIPHY_API_KEY) {
-    throw new Error("GIPHY_API_KEY is not set.");
+    throw new Error("GIPHY_API_KEY is not set.");  // [!code highlight]
   }
 
   await Bun.sleep(1000);
